@@ -2,6 +2,7 @@ package com.pharma.prescription.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,27 +19,32 @@ import java.time.LocalDate;
 @Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"fullName", "dateOfBirth"})})
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+    @NotNull
     @Pattern(regexp = "^[A-Za-z '-]+$", message = "Full name must contain only letters and spaces, apostrophes, or hyphens.")
     private String fullName;
 
+    @NotNull
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private LocalDate dateOfBirth;
+    private LocalDate dob;
 
-//    
-    @NotBlank
-    @Pattern(regexp = "^[A-Za-z0-9.,' -]+$", message = "Invalid address format.")
-    private String address;
-
-    @NotBlank
+    @NotNull
     @Pattern(regexp = "^\\d{7,15}$", message = "Invalid phone number format.")
     private String phoneNumber;
 
     @NotBlank
-    private String insuranceNumber;
+    private String insurance;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @Pattern(regexp = "^[A-Za-z0-9.,' -]+$", message = "Invalid address format.")
+    private Address address;
+
+
+
+
 
 }
 
