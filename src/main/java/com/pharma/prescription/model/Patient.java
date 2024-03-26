@@ -28,7 +28,7 @@ public class Patient {
 
     @NotNull
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private LocalDate dob;
+    private LocalDate dateOfBirth;
 
     @NotNull
     @Pattern(regexp = "^\\d{7,15}$", message = "Invalid phone number format.")
@@ -39,7 +39,7 @@ public class Patient {
 
     @OneToOne(cascade = CascadeType.ALL)
     @NotNull
-    @Pattern(regexp = "^[A-Za-z0-9.,' -]+$", message = "Invalid address format.")
+   // @Pattern(regexp = "^[A-Za-z0-9.,' -]+$", message = "Invalid address format.")
     private Address address;
 
 
