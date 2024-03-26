@@ -1,48 +1,45 @@
 package com.pharma.prescription.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Setter
+@Getter
+@Entity
+@Table(name = "doctors")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@Entity(name = "Doctors")
 public class Doctor {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @NotNull(message = "NPI is required")
     private Long npi;
-    @NotNull
+    @NotBlank(message = "First name is required")
     private String firstName;
-    @NotNull
+    @NotBlank(message = "Last name is required")
     private String lastName;
-    @NotNull
-    private String email;
-    @NotNull
+    @NotBlank(message = "Specialization is required")
     private String specialization;
-    
-    @OneToOne(cascade = CascadeType.ALL)
+    @NotBlank(message = "Email is required")
+    private String email;
+    @NotBlank(message = "Phone is required")
+    private String phone;
+    @NotBlank(message = "fax is required")
+    private String fax;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull(message = "Address is required")
+    @JoinColumn(name = "address_id")
     private Address address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @NotNull(message = "password is required")
+    private User user;
 
-    @Override
-    public String toString() {
-        return String.format("""
-                        Doctor info:\s
-                        ID: %d,\s
-                        npi: %d,\s
-                        firstName: %s,\s
-                        lastName: %s,\s
-                        email: %s,\s
-                        address: %s,\s
-                        specialization: %s,\s
-                        """, id, npi, firstName, lastName, email, address, specialization);
-    }
 
 
 
