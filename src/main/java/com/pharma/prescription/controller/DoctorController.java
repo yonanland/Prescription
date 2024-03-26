@@ -25,6 +25,11 @@ public class DoctorController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody DoctorRequestDTO doctorRequestDTO) {
-        return ResponseEntity.ok(doctorService.signUp(doctorRequestDTO));
+        try{
+            return ResponseEntity.ok(doctorService.signUp(doctorRequestDTO));
+        }
+        catch(DoctorCreationException dce){
+            return ResponseEntity.badRequest().body(dce.getMessage());
+        }
     }
 }
