@@ -2,12 +2,11 @@ package com.pharma.prescription.controller;
 
 import com.pharma.prescription.exceptions.DoctorCreationException;
 import com.pharma.prescription.service.DoctorService;
+import com.pharma.prescription.service.dto.DoctorRequestDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +21,10 @@ public class DoctorController {
         catch (DoctorCreationException dce){
             return ResponseEntity.badRequest().body(dce.getMessage());
         }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@Valid @RequestBody DoctorRequestDTO doctorRequestDTO) {
+        return ResponseEntity.ok(doctorService.signUp(doctorRequestDTO));
     }
 }
