@@ -17,10 +17,10 @@ public record DoctorRequestDTO(
         @NotNull(message = "NPI number is required")
         Long npiNumber,
         @JsonProperty("address")
-        @NotNull
+        @NotNull(message = "Address is required")
         AddressDTO addressDTO,
-        @NotBlank(message = "first name is required")
-        String specialty,
+        @NotBlank(message = "specialization is required")
+        String specialization,
         @NotBlank(message = "fax number is required")
         String faxNumber,
         @NotBlank(message = "email is required")

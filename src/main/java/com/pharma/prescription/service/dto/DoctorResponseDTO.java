@@ -9,7 +9,7 @@ public record DoctorResponseDTO(
         Long npiNumber,
         @JsonProperty("address")
         AddressDTO addressDTO,
-        String specialty,
+        String specialization,
         String faxNumber,
         String email,
         String phoneNumber,

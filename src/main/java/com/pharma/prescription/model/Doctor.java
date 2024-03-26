@@ -23,8 +23,8 @@ public class Doctor {
     private String firstName;
     @NotBlank(message = "Last name is required")
     private String lastName;
-    @NotBlank(message = "Specialty is required")
-    private String specialty;
+    @NotBlank(message = "Specialization is required")
+    private String specialization;
     @NotBlank(message = "Email is required")
     private String email;
     @NotBlank(message = "Phone is required")
