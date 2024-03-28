@@ -10,8 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
-    Optional<Patient> findByFullNameAndDateOfBirth(String fullName, LocalDate dateOfBirth);
+    Optional<Patient> findByFirstNameAndLastNameAndDateOfBirth(String firstName, String lastName, LocalDate dateOfBirth);
 
-    @Query("SELECT p FROM Patient p WHERE (:fullName IS NULL OR p.fullName = :fullName) AND (:dateOfBirth IS NULL OR p.dateOfBirth = :dateOfBirth)")
-    List<Patient> findByFullNameAndDateOfBirthOptional(@Param("fullName") String fullName, @Param("dateOfBirth") LocalDate dateOfBirth);
+    @Query("SELECT p FROM Patient p WHERE " +
+            "(:firstName IS NULL OR p.firstName = :firstName) AND " +
+            "(:lastName IS NULL OR p.lastName = :lastName) AND " +
+            "(:dateOfBirth IS NULL OR p.dateOfBirth = :dateOfBirth)")
+    List<Patient> findByFirstNameAndLastNameAndDateOfBirthOptional(
+            @Param("firstName") String firstName,
+            @Param("lastName") String lastName,
+            @Param("dateOfBirth") LocalDate dateOfBirth);
 }

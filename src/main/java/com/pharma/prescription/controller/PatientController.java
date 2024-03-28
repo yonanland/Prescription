@@ -4,6 +4,7 @@ import com.pharma.prescription.model.Patient;
 import com.pharma.prescription.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,17 +28,17 @@ public class PatientController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchPatients(@RequestParam(required = false) String fullName, @RequestParam(required = false) @DateTimeFormat(pattern = "MM/dd/yyyy") LocalDate dateOfBirth) {
-        if (fullName == null && dateOfBirth == null) {
-            return ResponseEntity.badRequest().body("Name and/or dob must be provided");
-        }
+    @PreAuthorize("hasRole('DOCTOR')")
+    public ResponseEntity<List<Patient>> searchPatients(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "MM/dd/yyyy") LocalDate dateOfBirth) {
 
-        List<Patient> results = patientService.searchPatients(fullName, dateOfBirth);
-        if (results.isEmpty()) {
-            return ResponseEntity.notFound().build();
+        List<Patient> patients = patientService.searchPatients(firstName, lastName, dateOfBirth);
+        if (patients.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(patients);
         }
-
-        return ResponseEntity.ok(results);
+        return ResponseEntity.ok(patients);
     }
 
 }

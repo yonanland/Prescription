@@ -26,6 +26,6 @@ public class Address {
     @Pattern(regexp = "^[A-Za-z '-]+$", message = "Invalid state format.")
     private String state;
 
-    @Pattern(regexp = "^\\d{5}(-\\d{4})?$", message = "Invalid ZIP format.")
+    @Pattern(regexp = "^\\d{5}$", message = "Invalid ZIP format.")
     private String zip;
 }

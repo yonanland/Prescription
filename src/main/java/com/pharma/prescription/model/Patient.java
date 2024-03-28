@@ -16,15 +16,19 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "patient", uniqueConstraints = {@UniqueConstraint(columnNames = {"fullName", "dateOfBirth"})})
+@Table(name = "patient")
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^[A-Za-z '-]+$", message = "Full name must contain only letters and spaces, apostrophes, or hyphens.")
-    private String fullName;
+    @Pattern(regexp = "^[A-Za-z '-]+$", message = "First name must contain only letters and spaces, apostrophes, or hyphens.")
+    private String firstName;
+
+    @NotNull
+    @Pattern(regexp = "^[A-Za-z '-]+$", message = "Last name must contain only letters and spaces, apostrophes, or hyphens.")
+    private String lastName;
 
     @NotNull
     @DateTimeFormat(pattern = "MM/dd/yyyy")

@@ -16,17 +16,14 @@ public class PatientServiceImpl implements PatientService {
     private PatientRepository patientRepository;
 
     public Patient createPatient(Patient patient) throws Exception {
-        if (patientRepository.findByFullNameAndDateOfBirth(patient.getFullName(), patient.getDateOfBirth()).isPresent()) {
-            throw new Exception("A patient with the same full name and date of birth already exists.");
+        if (patientRepository.findByFirstNameAndLastNameAndDateOfBirth(patient.getFirstName(), patient.getLastName(), patient.getDateOfBirth()).isPresent()) {
+            throw new Exception("A patient with the same name and date of birth already exists.");
         }
         return patientRepository.save(patient);
     }
 
-    public Optional<Patient> findPatient(String fullName, LocalDate dateOfBirth) {
-        return patientRepository.findByFullNameAndDateOfBirth(fullName, dateOfBirth);
-    }
-
-    public List<Patient> searchPatients(String fullName, LocalDate dateOfBirth) {
-        return patientRepository.findByFullNameAndDateOfBirthOptional(fullName, dateOfBirth);
+    @Override
+    public List<Patient> searchPatients(String firstName, String lastName, LocalDate dateOfBirth) {
+        return patientRepository.findByFirstNameAndLastNameAndDateOfBirthOptional(firstName, lastName, dateOfBirth);
     }
 }
