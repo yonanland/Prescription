@@ -1,6 +1,7 @@
 package com.pharma.prescription.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -23,11 +24,11 @@ public class Patient {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^[A-Za-z '-]+$", message = "First name must contain only letters and spaces, apostrophes, or hyphens.")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "First name must contain only letters")
     private String firstName;
 
     @NotNull
-    @Pattern(regexp = "^[A-Za-z '-]+$", message = "Last name must contain only letters and spaces, apostrophes, or hyphens.")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "Last name must contain only letters")
     private String lastName;
 
     @NotNull
@@ -43,7 +44,7 @@ public class Patient {
 
     @OneToOne(cascade = CascadeType.ALL)
     @NotNull
-   // @Pattern(regexp = "^[A-Za-z0-9.,' -]+$", message = "Invalid address format.")
+    @Valid
     private Address address;
 
 

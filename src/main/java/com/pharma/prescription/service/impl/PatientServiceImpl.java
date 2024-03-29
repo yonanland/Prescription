@@ -1,5 +1,7 @@
 package com.pharma.prescription.service.impl;
 
+import com.pharma.prescription.Exception.PatientAlreadyExistsException;
+import com.pharma.prescription.Exception.PatientProfileNotFoundException;
 import com.pharma.prescription.model.Patient;
 import com.pharma.prescription.repository.PatientRepository;
 import com.pharma.prescription.service.PatientService;
@@ -15,15 +17,19 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public Patient createPatient(Patient patient) throws Exception {
+    public Patient createPatient(Patient patient){
         if (patientRepository.findByFirstNameAndLastNameAndDateOfBirth(patient.getFirstName(), patient.getLastName(), patient.getDateOfBirth()).isPresent()) {
-            throw new Exception("A patient with the same name and date of birth already exists.");
+            throw new PatientAlreadyExistsException("A patient with the same name and date of birth already exists.");
         }
         return patientRepository.save(patient);
     }
 
     @Override
     public List<Patient> searchPatients(String firstName, String lastName, LocalDate dateOfBirth) {
-        return patientRepository.findByFirstNameAndLastNameAndDateOfBirthOptional(firstName, lastName, dateOfBirth);
+        List<Patient> patients = patientRepository.findByFirstNameAndLastNameAndDateOfBirthOptional(firstName, lastName, dateOfBirth);
+        if (patients.isEmpty()) {
+            throw new PatientProfileNotFoundException("No patients found matching the search criteria.");
+        }
+        return patients;
     }
 }
