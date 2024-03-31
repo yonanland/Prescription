@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Table(name = "patient")
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -32,7 +32,7 @@ public class Patient {
     private String lastName;
 
     @NotNull
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
     @NotNull
@@ -46,10 +46,6 @@ public class Patient {
     @NotNull
     @Valid
     private Address address;
-
-
-
-
 
 }
 

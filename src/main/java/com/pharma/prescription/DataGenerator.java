@@ -25,7 +25,7 @@ public class DataGenerator implements CommandLineRunner {
         Patient patient1 = new Patient();
         patient1.setFirstName("John");
         patient1.setLastName("Doe");
-        patient1.setDateOfBirth(LocalDate.parse("01/15/1985", DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        patient1.setDateOfBirth(LocalDate.parse("1985-01-15", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         patient1.setPhoneNumber("1234567890");
         patient1.setInsurance("Premium Health Insurance");
 

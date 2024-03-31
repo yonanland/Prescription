@@ -1,21 +1,17 @@
 package com.pharma.prescription.controller;
 
-import com.pharma.prescription.Exception.PatientAlreadyExistsException;
-import com.pharma.prescription.Exception.PatientProfileNotFoundException;
-import com.pharma.prescription.model.Patient;
+import com.pharma.prescription.dto.PatientDTO;
 import com.pharma.prescription.service.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.time.LocalDate;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -25,24 +21,25 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-    @PostMapping("/profiles/new")
-    //@PreAuthorize("hasRole('DOCTOR')")
-    public ResponseEntity<?> createPatientProfile(@Valid @RequestBody Patient patient) throws Exception {
-        Patient savedPatient = patientService.createPatient(patient);
-        return ResponseEntity.ok(savedPatient);
+    @PostMapping
+    // @PreAuthorize("hasRole('DOCTOR')")
+    public ResponseEntity<PatientDTO> createPatientProfile(@Valid @RequestBody PatientDTO patientDTO) throws Exception {
+        PatientDTO savedPatientDTO = patientService.createPatient(patientDTO);
+        return ResponseEntity.ok(savedPatientDTO);
     }
 
     @GetMapping("/search")
-   // @PreAuthorize("hasRole('DOCTOR')")
-    public ResponseEntity<List<Patient>> searchPatients(
+    // @PreAuthorize("hasRole('DOCTOR')")
+    public ResponseEntity<List<PatientDTO>> searchPatients(
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "MM/dd/yyyy") LocalDate dateOfBirth) {
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateOfBirth) {
 
-        List<Patient> patients = patientService.searchPatients(firstName, lastName, dateOfBirth);
-        if (patients.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(patients);
+
+        List<PatientDTO> patientsDTO = patientService.searchPatients(firstName, lastName, dateOfBirth);
+        if (patientsDTO.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(patients);
+        return ResponseEntity.ok(patientsDTO);
     }
 }

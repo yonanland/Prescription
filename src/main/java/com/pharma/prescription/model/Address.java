@@ -15,7 +15,7 @@ import lombok.Setter;
 @Table(name = "Address")
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long address_id;
     @Pattern(regexp = "^[A-Za-z0-9.,' -]+$", message = "Invalid street format.")
     private String street;

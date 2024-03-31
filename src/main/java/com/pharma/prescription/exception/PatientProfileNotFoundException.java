@@ -1,4 +1,4 @@
-package com.pharma.prescription.Exception;
+package com.pharma.prescription.exception;
 
 public class PatientProfileNotFoundException extends RuntimeException {
     public PatientProfileNotFoundException(String message) {
