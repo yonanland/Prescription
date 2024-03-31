@@ -6,6 +6,8 @@ import com.pharma.prescription.service.IDoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DoctorServiceImpl implements IDoctorService {
 
@@ -19,5 +21,15 @@ public class DoctorServiceImpl implements IDoctorService {
     @Override
     public Doctor findByEmail(String email) {
         return doctorRepository.findByEmail(email);
+    }
+
+    @Override
+    public Doctor findById(Long id) {
+        return doctorRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Doctor> findAll() {
+        return doctorRepository.findAll();
     }
 }

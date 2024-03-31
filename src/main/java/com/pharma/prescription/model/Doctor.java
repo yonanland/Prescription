@@ -16,7 +16,7 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "NPI is required")
+    @NotNull(message = "NPI is required")
     @Pattern(regexp = "^[0-9]*$", message = "NPI must contain only numbers")
     private Long npiNumber;
 

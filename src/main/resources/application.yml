@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: prescription
+
+## DATABASE CONFIGURATION PROPERTIES
+# username = postgres
+  datasource:
+    username: postgres
+# password = root
+    password: root
+# database driver class name
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+# Enable SCRAM-based authentication
+    hikari:
+        passwordEncoder: org.springframework.security.crypto.password.NoOpPasswordEncoder
+
+##JPA/ HIBERNATE CONFIGURATION PROPERTIES
+# hibernate dialect for Postgresql database
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+            use_jdbc_metadata_defaults: false
+        jdbc:
+            lob:
+                non_contextual_creation: true
+
+# update the database schema automatically (ddl-auto: create, create-drop, validate, update) (ddl: data definition language) (dml: data manipulation language)
+    hibernate:
+      ddl-auto: update
+# show sql statements in console
+    show-sql: true
+
+
+
+
+#spring:
+#  application:
+#    name: prescription
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/Kabbee_prescription
+#    username: postgre
+#    password: root
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    hibernate:
+#     ddl-auto: create
+#
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+
+
+
