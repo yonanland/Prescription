@@ -1,32 +1,51 @@
 package com.pharma.prescription.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+
+import java.time.LocalDate;
+
+@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@Entity(name = "Patients")
+@Table(name = "patient")
 public class Patient {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
+    @Pattern(regexp = "^[A-Za-z]+$", message = "First name must contain only letters")
     private String firstName;
+
     @NotNull
+    @Pattern(regexp = "^[A-Za-z]+$", message = "Last name must contain only letters")
     private String lastName;
+
     @NotNull
-    private String dob;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfBirth;
+
     @NotNull
+    @Pattern(regexp = "^\\d{7,15}$", message = "Invalid phone number format.")
     private String phoneNumber;
-    @NotNull
+
+    @NotBlank
     private String insurance;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @Valid
     private Address address;
+
 }
+
